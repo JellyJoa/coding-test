@@ -6,25 +6,26 @@
 # 215, 513, 712, 803
 # 위와 같은 4개의 랜선을 잘라 길이가 같은 10개의 랜선을 만들고자 할 때,
 # 만들 수 있는 랜선의 최대 길이는 몇 일까?
-# 반복함수로!
+# 재귀함수로 풀기!
 
-def binary_search(arr, target):
-    start = 0
-    end = arr[-1]
+def binary_search(arr, start, end, target):
+    mid = (start + end) // 2
+    total = 0
 
-    while (end-start >= 0):
-        mid = (start+end)//2
-        line = 0
+    for i in arr:
+        total += (i // mid)
 
-        for i in arr:
-            line += i // mid
+    if total > target:
+        return binary_search(arr, mid+1, end, target)
+    elif total == target:
+        return mid
+    else:
+        return binary_search(arr, start, mid-1, target)
 
-        if line >= target:
-            start = mid + 1
-        else:
-            end = mid -1
-    return end
 
 arr = [215, 513, 712, 803]
+start = 0
+end = arr[-1]
 target = 10
-print(binary_search(arr, target))
+result = binary_search(arr, start, end, target)
+print(result)
